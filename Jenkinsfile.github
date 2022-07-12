@@ -55,7 +55,7 @@ pipeline {
                         }
                     steps {
                         echo "Docker args are ${env.DOCKER_ARGS}"
-                        sh "docker build --pull $DOCKER_ARGS --build-arg IMAGE_TAG=$IMAGE_TAG --tag $NAME:$IMAGE_TAG ."
+                        sh "docker build --pull --build-arg IMAGE_TAG=$IMAGE_TAG $DOCKER_ARGS  --tag $NAME:$IMAGE_TAG ."
                         }
                     }
                 stage("SLES15 SP3") {
@@ -64,7 +64,7 @@ pipeline {
                         DOCKER_ARGS = getDockerBuildArgs(name: env.NAME, description: env.DESCRIPTION, version: env.IMAGE_TAG)
                         }
                     steps {
-                        sh "docker build --pull $DOCKER_ARGS --build-arg IMAGE_TAG=$IMAGE_TAG --tag $NAME:$IMAGE_TAG ."
+                        sh "docker build --pull --build-arg IMAGE_TAG=$IMAGE_TAG $DOCKER_ARGS  --tag $NAME:$IMAGE_TAG ."
                         }
                     }
 //                stage("SLES15 SP4") {
@@ -73,7 +73,7 @@ pipeline {
 //                        IMAGE_TAG="15.4"
 //                        }
 //                    steps {
-//                        sh "docker build --pull $DOCKER_ARGS --build-arg IMAGE_TAG=$IMAGE_TAG --tag $NAME:$IMAGE_TAG ."
+//                        sh "docker build --pull --build-arg IMAGE_TAG=$IMAGE_TAG $DOCKER_ARGS --tag $NAME:$IMAGE_TAG ."
 //                        }
 //                    }
                 }
