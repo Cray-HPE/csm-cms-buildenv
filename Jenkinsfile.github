@@ -54,7 +54,7 @@ pipeline {
                         IMAGE_TAG="15.2"
                         }
                     steps {
-                        docker build --pull "$DOCKER_ARGS" --tag "$NAME:$IMAGE_TAG" .
+                        sh "docker build --pull $DOCKER_ARGS --tag $NAME:$IMAGE_TAG ."
                         }
                     }
                 stage("SLES15 SP3") {
@@ -62,7 +62,7 @@ pipeline {
                         IMAGE_TAG="15.3"
                         }
                     steps {
-                        docker build --pull "$DOCKER_ARGS" --tag "$NAME:$IMAGE_TAG" .
+                        sh "docker build --pull $DOCKER_ARGS --tag $NAME:$IMAGE_TAG ."
                         }
                     }
                 stage("SLES15 SP4") {
@@ -70,7 +70,7 @@ pipeline {
                         IMAGE_TAG="15.4"
                         }
                     steps {
-                        docker build --pull "$DOCKER_ARGS" --tag "$NAME:$IMAGE_TAG" .
+                        sh "docker build --pull $DOCKER_ARGS --tag $NAME:$IMAGE_TAG ."
                         }
                     }
                 }
