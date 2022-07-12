@@ -30,12 +30,10 @@ pipeline {
     agent {
         label "metal-gcp-builder"
         }
-
     options {
         buildDiscarder(logRotator(numToKeepStr: "10"))
         timestamps()
         }
-
     environment {
         NAME = "csm-cms-buildenv"
         DESCRIPTION = "A set of build environments used for churning out distribution native packages"
@@ -59,20 +57,21 @@ pipeline {
                         docker build --pull ${DOCKER_ARGS} --tag '${NAME}:${IMAGE_TAG}' .
                         }
                     }
-            stage("SLES15 SP3") {
-                environment {
-                    IMAGE_TAG="15.3"
+                stage("SLES15 SP3") {
+                    environment {
+                        IMAGE_TAG="15.3"
+                        }
+                    steps {
+                        docker build --pull ${DOCKER_ARGS} --tag '${NAME}:${IMAGE_TAG}' .
+                        }
                     }
-                steps {
-                    docker build --pull ${DOCKER_ARGS} --tag '${NAME}:${IMAGE_TAG}' .
-                    }
-                }
-            stage("SLES15 SP4") {
-                environment {
-                    IMAGE_TAG="15.4"
-                    }
-                steps {
-                    docker build --pull ${DOCKER_ARGS} --tag '${NAME}:${IMAGE_TAG}' .
+                stage("SLES15 SP4") {
+                    environment {
+                        IMAGE_TAG="15.4"
+                        }
+                    steps {
+                        docker build --pull ${DOCKER_ARGS} --tag '${NAME}:${IMAGE_TAG}' .
+                        }
                     }
                 }
             }
