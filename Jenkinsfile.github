@@ -103,7 +103,7 @@ pipeline {
 //                    steps {
 //                        publishCsmDockerImage(image: env.NAME, tag: "$IMAGE_TAG", isStable: env.IS_STABLE)
 //                        }
-                    }
+//                    }
                 }
             }
         }
