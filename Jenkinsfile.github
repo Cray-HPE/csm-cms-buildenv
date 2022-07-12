@@ -29,26 +29,26 @@
 pipeline {
     agent {
         label "metal-gcp-builder"
-    }
+        }
 
     options {
         buildDiscarder(logRotator(numToKeepStr: "10"))
         timestamps()
-    }
+        }
 
     environment {
         NAME = "csm-cms-buildenv"
         DESCRIPTION = "A set of build environments used for churning out distribution native packages"
         IS_STABLE = getBuildIsStable()
         DOCKER_ARGS = getDockerBuildArgs(name: env.NAME, description: env.DESCRIPTION)
-    }
+        }
     stages {
         stage("Clone cms_meta_tools repo") {
             steps {
                 // This function is defined in cms-meta-tools:vars/cloneCMSMetaTools.groovy
                 cloneCMSMetaTools()
+                }
             }
-        }
         stage("Build Distribution Images") {
             parallel {
                 stage("SLES15 SP2") {
@@ -106,4 +106,4 @@ pipeline {
             }
         }
     }
-
+}
