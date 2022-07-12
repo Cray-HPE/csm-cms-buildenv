@@ -67,15 +67,15 @@ pipeline {
                         sh "docker build --pull $DOCKER_ARGS --build-arg IMAGE_TAG=$IMAGE_TAG --tag $NAME:$IMAGE_TAG ."
                         }
                     }
-                stage("SLES15 SP4") {
-                    environment {
-                        DOCKER_ARGS = getDockerBuildArgs(name: env.NAME, description: env.DESCRIPTION, version: env.IMAGE_TAG)
-                        IMAGE_TAG="15.4"
-                        }
-                    steps {
-                        sh "docker build --pull $DOCKER_ARGS --build-arg IMAGE_TAG=$IMAGE_TAG --tag $NAME:$IMAGE_TAG ."
-                        }
-                    }
+//                stage("SLES15 SP4") {
+//                    environment {
+//                        DOCKER_ARGS = getDockerBuildArgs(name: env.NAME, description: env.DESCRIPTION, version: env.IMAGE_TAG)
+//                        IMAGE_TAG="15.4"
+//                        }
+//                    steps {
+//                        sh "docker build --pull $DOCKER_ARGS --build-arg IMAGE_TAG=$IMAGE_TAG --tag $NAME:$IMAGE_TAG ."
+//                        }
+//                    }
                 }
             }
         stage("Upload Build Artifacts") {
@@ -96,13 +96,13 @@ pipeline {
                         publishCsmDockerImage(image: env.NAME, tag: "$IMAGE_TAG", isStable: env.IS_STABLE)
                         }
                     }
-                stage("Publish SLES15 SP4") {
-                    environment {
-                       IMAGE_TAG="15.4"
-                       }
-                    steps {
-                        publishCsmDockerImage(image: env.NAME, tag: "$IMAGE_TAG", isStable: env.IS_STABLE)
-                        }
+//                stage("Publish SLES15 SP4") {
+//                    environment {
+//                       IMAGE_TAG="15.4"
+//                       }
+//                    steps {
+//                        publishCsmDockerImage(image: env.NAME, tag: "$IMAGE_TAG", isStable: env.IS_STABLE)
+//                        }
                     }
                 }
             }

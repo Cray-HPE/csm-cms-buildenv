@@ -27,6 +27,6 @@ ARG IMAGE_TAG=15.2
 ARG BASE_IMAGE=${UPSTREAM_IMAGE_HOST}/${IMAGE_NAME}:${IMAGE_TAG}
 
 FROM $BASE_IMAGE as base_image
-RUN zypper update
+RUN zypper --non-interactive update
 RUN zypper --non-interactive install python3-pip
 COPY pip.conf /etc/pip.conf
