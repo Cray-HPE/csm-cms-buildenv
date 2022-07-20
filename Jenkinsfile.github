@@ -37,7 +37,7 @@ pipeline {
     environment {
         NAME = "csm-cms-buildenv"
         DESCRIPTION = "A set of build environments used for churning out distribution native packages"
-        IS_STABLE = True 
+        IS_STABLE = true 
         }
     stages {
         stage("Clone cms_meta_tools repo") {
