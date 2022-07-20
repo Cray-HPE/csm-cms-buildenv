@@ -37,7 +37,9 @@ pipeline {
     environment {
         NAME = "csm-cms-buildenv"
         DESCRIPTION = "A set of build environments used for churning out distribution native packages"
-        IS_STABLE = true 
+        IS_STABLE = true
+        VENDOR="opensuse"
+        DISTRIBUTION="leap" 
         }
     stages {
         stage("Clone cms_meta_tools repo") {
@@ -55,7 +57,7 @@ pipeline {
                         }
                     steps {
                         echo "Docker args are ${env.DOCKER_ARGS}"
-                        sh "docker build --build-arg IMAGE_TAG=$IMAGE_TAG --pull  $DOCKER_ARGS --tag $NAME:$IMAGE_TAG ."
+                        sh "docker build --build-arg IMAGE_TAG=$IMAGE_TAG --pull  $DOCKER_ARGS --tag csm-cms-$VENDOR-$DISTRIBUTION:$IMAGE_TAG ."
                         }
                     }
                 stage("OpenSuse Leap 15 SP3") {
@@ -64,17 +66,16 @@ pipeline {
                         DOCKER_ARGS = getDockerBuildArgs(name: env.NAME, description: env.DESCRIPTION, version: env.IMAGE_TAG)
                         }
                     steps {
-                        sh "docker build --build-arg IMAGE_TAG=$IMAGE_TAG --pull $DOCKER_ARGS --tag $NAME:$IMAGE_TAG ."
+                        sh "docker build --build-arg IMAGE_TAG=$IMAGE_TAG --pull $DOCKER_ARGS --tag csm-cms-$VENDOR-$DISTRIBUTION:$IMAGE_TAG ."
                         }
                     }
                 stage("Open Suse 15 SP4") {
                     environment {
-                        
                         IMAGE_TAG="15.4"
                         DOCKER_ARGS = getDockerBuildArgs(name: env.NAME, description: env.DESCRIPTION, version: env.IMAGE_TAG)
                         }
                     steps {
-                        sh "docker build --build-arg IMAGE_TAG=$IMAGE_TAG --pull $DOCKER_ARGS --tag $NAME:$IMAGE_TAG ."
+                        sh "docker build --build-arg IMAGE_TAG=$IMAGE_TAG --pull $DOCKER_ARGS --tag csm-cms-$VENDOR-$DISTRIBUTION:$IMAGE_TAG ."
                         }
                     }
                 }
@@ -86,7 +87,7 @@ pipeline {
                        IMAGE_TAG="15.2"
                        }
                     steps {
-                        publishCsmDockerImage(image: env.NAME, tag: "$IMAGE_TAG", isStable: env.IS_STABLE)
+                        publishCsmDockerImage(image: "csm-cms-$VENDOR-$DISTRIBUTION", tag: "$IMAGE_TAG", isStable: env.IS_STABLE)
                         }
                     }
                 stage("Publish LEAP15 SP3") {
@@ -94,7 +95,7 @@ pipeline {
                        IMAGE_TAG="15.3"
                        }
                     steps {
-                        publishCsmDockerImage(image: env.NAME, tag: "$IMAGE_TAG", isStable: env.IS_STABLE)
+                        publishCsmDockerImage(image: "csm-cms-$VENDOR-$DISTRIBUTION", tag: "$IMAGE_TAG", isStable: env.IS_STABLE)
                         }
                     }
                 stage("Publish LEAP15 SP4") {
@@ -102,7 +103,7 @@ pipeline {
                        IMAGE_TAG="15.4"
                        }
                     steps {
-                        publishCsmDockerImage(image: env.NAME, tag: "$IMAGE_TAG", isStable: env.IS_STABLE)
+                        publishCsmDockerImage(image: "csm-cms-$VENDOR-$DISTRIBUTION", tag: "$IMAGE_TAG", isStable: env.IS_STABLE)
                         }
                     }
                 }
