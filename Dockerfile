@@ -21,12 +21,14 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 
-ARG UPSTREAM_IMAGE_HOST=artifactory.algol60.net
-ARG IMAGE_NAME=csm-docker/stable/csm-docker-sle
+ARG UPSTREAM_IMAGE_HOST=docker.io
+ARG IMAGE_NAME=opsensuse/leap
 ARG IMAGE_TAG=15.2
 ARG BASE_IMAGE=${UPSTREAM_IMAGE_HOST}/${IMAGE_NAME}:${IMAGE_TAG}
 
 FROM $BASE_IMAGE as base_image
-RUN zypper --non-interactive update
-RUN zypper --non-interactive install python3-pip
+RUN zypper --non-interactive update && \
+    zypper --non-interactive install python3 python3-pip
+
 COPY pip.conf /etc/pip.conf
+RUN pip3 install --no-cache-dir setuptools

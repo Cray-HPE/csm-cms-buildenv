@@ -48,39 +48,40 @@ pipeline {
             }
         stage("Build Distribution Images") {
             parallel {
-                stage("SLES15 SP2") {
+                stage("OpenSuse Leap 15 SP2") {
                     environment {
                         IMAGE_TAG="15.2"
                         DOCKER_ARGS = getDockerBuildArgs(name: env.NAME, description: env.DESCRIPTION, version: env.IMAGE_TAG)
                         }
                     steps {
                         echo "Docker args are ${env.DOCKER_ARGS}"
-                        sh "docker build --pull --build-arg IMAGE_TAG=$IMAGE_TAG $DOCKER_ARGS  --tag $NAME:$IMAGE_TAG ."
+                        sh "docker build --build-arg IMAGE_TAG=$IMAGE_TAG --pull  $DOCKER_ARGS --tag $NAME:$IMAGE_TAG ."
                         }
                     }
-                stage("SLES15 SP3") {
+                stage("OpenSuse Leap 15 SP3") {
                     environment {
                         IMAGE_TAG="15.3"
                         DOCKER_ARGS = getDockerBuildArgs(name: env.NAME, description: env.DESCRIPTION, version: env.IMAGE_TAG)
                         }
                     steps {
-                        sh "docker build --pull --build-arg IMAGE_TAG=$IMAGE_TAG $DOCKER_ARGS  --tag $NAME:$IMAGE_TAG ."
+                        sh "docker build --build-arg IMAGE_TAG=$IMAGE_TAG --pull $DOCKER_ARGS --tag $NAME:$IMAGE_TAG ."
                         }
                     }
-//                stage("SLES15 SP4") {
-//                    environment {
-//                        DOCKER_ARGS = getDockerBuildArgs(name: env.NAME, description: env.DESCRIPTION, version: env.IMAGE_TAG)
-//                        IMAGE_TAG="15.4"
-//                        }
-//                    steps {
-//                        sh "docker build --pull --build-arg IMAGE_TAG=$IMAGE_TAG $DOCKER_ARGS --tag $NAME:$IMAGE_TAG ."
-//                        }
-//                    }
+                stage("Open Suse 15 SP4") {
+                    environment {
+                        
+                        IMAGE_TAG="15.4"
+                        DOCKER_ARGS = getDockerBuildArgs(name: env.NAME, description: env.DESCRIPTION, version: env.IMAGE_TAG)
+                        }
+                    steps {
+                        sh "docker build --build-arg IMAGE_TAG=$IMAGE_TAG --pull $DOCKER_ARGS --tag $NAME:$IMAGE_TAG ."
+                        }
+                    }
                 }
             }
         stage("Upload Build Artifacts") {
             parallel {
-                stage("Publish SLES15 SP2") {
+                stage("Publish LEAP15 SP2") {
                     environment {
                        IMAGE_TAG="15.2"
                        }
@@ -88,7 +89,7 @@ pipeline {
                         publishCsmDockerImage(image: env.NAME, tag: "$IMAGE_TAG", isStable: env.IS_STABLE)
                         }
                     }
-                stage("Publish SLES15 SP3") {
+                stage("Publish LEAP15 SP3") {
                     environment {
                        IMAGE_TAG="15.3"
                        }
@@ -96,14 +97,14 @@ pipeline {
                         publishCsmDockerImage(image: env.NAME, tag: "$IMAGE_TAG", isStable: env.IS_STABLE)
                         }
                     }
-//                stage("Publish SLES15 SP4") {
-//                    environment {
-//                       IMAGE_TAG="15.4"
-//                       }
-//                    steps {
-//                        publishCsmDockerImage(image: env.NAME, tag: "$IMAGE_TAG", isStable: env.IS_STABLE)
-//                        }
-//                    }
+                stage("Publish LEAP15 SP4") {
+                    environment {
+                       IMAGE_TAG="15.4"
+                       }
+                    steps {
+                        publishCsmDockerImage(image: env.NAME, tag: "$IMAGE_TAG", isStable: env.IS_STABLE)
+                        }
+                    }
                 }
             }
         }
