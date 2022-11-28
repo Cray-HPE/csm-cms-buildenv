@@ -38,6 +38,7 @@ pipeline {
         NAME = "csm-cms-buildenv"
         DESCRIPTION = "A set of build environments used for churning out distribution native packages"
         IS_STABLE = true
+	DOCKER_BUILDKIT = "1"
         VENDOR="opensuse"
         DISTRIBUTION="leap" 
         }

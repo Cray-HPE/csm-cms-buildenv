@@ -31,4 +31,5 @@ RUN zypper --non-interactive update && \
     zypper --non-interactive install python3 python3-pip
 
 COPY pip.conf /etc/pip.conf
-RUN pip3 install --no-cache-dir setuptools
+RUN --mount=type=secret,id=netrc,target=/root/.netrc \
+    pip3 install --no-cache-dir setuptools
